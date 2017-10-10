@@ -8,11 +8,10 @@
           <button  @click.self="addToList">Add</button>
           <button @click.self="voidList">Void List</button>
           <button @click.self="clearSelected">Clear Selected</button>
-          <ul>
-            <li v-for="listItem in listItems">
-              <input type="checkbox" v-model="listItem.checked">{{listItem.text}}<button @click.self="deleteItem(listItem)">Delete</button>
-            </li>
-          </ul>
+          <draggable class="todo-list">
+            <div class="list-items"v-for="listItem in listItems">
+              <input type="checkbox" v-model="listItem.checked">{{listItem.text}}<button @click.self="deleteItem(listItem)">Delete</button></div>
+          </draggable>
         </div>
       </div>
     </div>
@@ -22,9 +21,12 @@
 </template>
 
 <script>
-	
+import draggable from 'vuedraggable'
 export default {
   name: 'TodoList',
+  components: {
+    draggable
+  },
   data () {
     return {
       inputText: 'bingo bongo',
