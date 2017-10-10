@@ -4,13 +4,13 @@
       <div class="row">
         <div class="col-12">
           <h2>{{inputText}}</h2>
-          <input v-model="newItem" type="text"/>
-          <button @click.self="addToList">Add</button>
-
-
+          <input v-model="newItem" v-on:keyup.enter="addToList" type="text"/>
+          <button  @click.self="addToList">Add</button>
+          <button @click.self="voidList">Void List</button>
+          <button @click.self="clearSelected">Clear Selected</button>
           <ul>
             <li v-for="listItem in listItems">
-              {{listItem.text}}
+              <input type="checkbox" v-model="listItem.checked">{{listItem.text}}<button @click.self="deleteItem(listItem)">Delete</button>
             </li>
           </ul>
         </div>
@@ -38,10 +38,26 @@ export default {
       if (item) {
         this.listItems.push(
           {
-            text: item
+            text: item,
+            checked: false
           }
         )
         this.newItem = ''
+      }
+    },
+    voidList: function () {
+      this.listItems = []
+    },
+    deleteItem: function (item) {
+      var indexOfItem = this.listItems.indexOf(item)
+      this.listItems.splice(indexOfItem, 1)
+    },
+    clearSelected: function () {
+      // TODO: Replace for a foreach version?
+      for (var i = this.listItems.length - 1; i >= 0; i--) {
+        if (this.listItems[i].checked) {
+          this.deleteItem(this.listItems[i])
+        }
       }
     }
   }
