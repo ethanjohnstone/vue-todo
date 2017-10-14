@@ -1,6 +1,7 @@
 # vue-todo
 
 > Neat Todo list
+> demo at list.jar.nz
 
 ## Build Setup
 
