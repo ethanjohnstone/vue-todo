@@ -19,13 +19,26 @@
         </div>
       </div>
     </div>
-    <!-- <pre>{{$data}}</pre> -->
   </div>
-
 </template>
 
 <script>
 import draggable from 'vuedraggable'
+
+var STORAGE_KEY = 'BingoBongo'
+var todoStorage = {
+  fetch: function () {
+    var thingsTodo = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+    thingsTodo.forEach(function (todo, index) {
+      todo.id = index
+    })
+    todoStorage.uid = thingsTodo.length
+    return thingsTodo
+  },
+  save: function (todos) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+  }
+}
 export default {
   name: 'TodoList',
   components: {
@@ -35,7 +48,15 @@ export default {
     return {
       inputText: 'bingo bongo',
       newItem: '',
-      listItems: []
+      listItems: todoStorage.fetch()
+    }
+  },
+  watch: {
+    listItems: {
+      handler: function (todos) {
+        todoStorage.save(todos)
+      },
+      deep: true
     }
   },
   methods: {
