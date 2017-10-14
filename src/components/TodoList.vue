@@ -10,9 +10,9 @@
           <button @click.self="clearSelected">Clear Selected</button>
           <draggable class="todo-list">
             <div class="list-items"v-for="listItem in listItems">
-              <input type="checkbox" v-model="listItem.checked">
+              <input type="checkbox" v-model="listItem.achieved">
               <label @dblclick.self="editItem(listItem)" v-if="!listItem.clicked">{{listItem.text}}</label>
-              <input v-model="listItem.text" type="text" v-on:keyup.enter="doneEditing(listItem)" v-on:keyup.esc="cancelEdit(listItem)" v-bind:value="listItem.text" v-if="listItem.clicked">
+              <input @blur="cancelEdit(listItem)" v-model="listItem.text" type="text" v-on:keyup.enter="doneEditing(listItem)" v-on:keyup.esc="cancelEdit(listItem)" v-bind:value="listItem.text" v-if="listItem.clicked">
               <button @click.self="deleteItem(listItem)">Delete</button>
             </div>
           </draggable>
@@ -66,7 +66,7 @@ export default {
         this.listItems.push(
           {
             text: item,
-            checked: false,
+            achieved: false,
             clicked: false,
             tempText: ''
           }
@@ -84,7 +84,7 @@ export default {
     clearSelected: function () {
       // TODO: Replace for a foreach version?
       for (var i = this.listItems.length - 1; i >= 0; i--) {
-        if (this.listItems[i].checked) {
+        if (this.listItems[i].achieved) {
           this.deleteItem(this.listItems[i])
         }
       }
