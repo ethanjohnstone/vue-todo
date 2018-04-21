@@ -1,8 +1,5 @@
 # vue-todo
 
-> Neat Todo list
-> demo at <a href="https://list.jar.nz" target="_blank">list.jar.nz</a>
-
 ## Build Setup
 
 ``` bash
